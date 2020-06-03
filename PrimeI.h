@@ -3,8 +3,10 @@ class PrimeI {
 public:
 	MTerm *myMTerms; // 이 PI에 속한 MTerm들.
 	int myMTermsCount; // 이 PI에 속한 MTerm의 수.
-	int numOfOnes; // 1의 수. 하이푼은 제외임.
-	unsigned int hyphens; // 0-01 이라면, 하이푼 위치에 1. 0100.
+	unsigned int binaryNum; // 0-01 이라면, 0001. 하이픈은 0으로.
+		// 하이픈을 0으로 하는 이유는, 1의 수를 셀 때 하이픈을 제외해야 하므로.
+	int numOfOnes; // 1의 수. 하이픈은 제외임.
+	unsigned int hyphens; // 0-01 이라면, 하이픈 위치에 1. 0100.
 	bool isCombined;
 
 	PrimeI();
