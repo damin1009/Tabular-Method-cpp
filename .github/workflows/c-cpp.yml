@@ -13,7 +13,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
-    - name: make
-      run: make
-    - name: start
-      run: ./main
+    - name: make MTerm_test
+      run: make MTerm_test
+    - name: start MTerm_test
+      run: ./MTerm_test
+      
+    - name: make PrimeI_test
+      run: make PrimeI_test
+    - name: start PrimeI_test
+      run: ./PrimeI_test
