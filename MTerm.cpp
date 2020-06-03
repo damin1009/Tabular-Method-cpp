@@ -29,6 +29,13 @@ bool MTerm::IsHDOne(const MTerm& m) const {
 	return (numOfOneOfXORed == 1);
 }
 
+int MTerm::OneAmount() const {
+	int oneAmount = 0;
+	for (int i = 0; i < nbits; i++)
+		oneAmount += Bit(i);
+	return oneAmount;
+}
+
 ostream& operator<<(ostream& os, const MTerm& m) {
 	for (int i = m.nbits - 1; i >= 0; i--)
 		os << m.Bit(i);

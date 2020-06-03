@@ -15,6 +15,12 @@ int main(void) {
 	cout << "m3: " << m3 << endl;
 	cout << "x5: " << x5 << endl;
 
+	cout << "# of 1 of m0: " << m0.OneAmount() << endl;
+	cout << "# of 1 of m1: " << m1.OneAmount() << endl;
+	cout << "# of 1 of m2: " << m2.OneAmount() << endl;
+	cout << "# of 1 of m3: " << m3.OneAmount() << endl;
+	cout << "# of 1 of x5: " << x5.OneAmount() << endl;
+
 	cout << "m0 m1 HD is One? " << m0.IsHDOne(m1) << endl;
 	cout << "m0 m2 HD is One? " << m0.IsHDOne(m2) << endl;
 	cout << "m0 m3 HD is One? " << m0.IsHDOne(m3) << endl;
