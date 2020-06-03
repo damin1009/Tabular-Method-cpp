@@ -1,0 +1,25 @@
+#include "PrimeI.h"
+//#include <iostream>
+using namespace std;
+
+int main(void) {
+	int numAmount = 6;
+	int *nums = new int[numAmount] { 0, 4, 8, 10, 11, 12 };
+	int numdAmount = 2;
+	int *numsd = new int[numdAmount] { 13, 15 };
+
+	int allAmount = numAmount + numdAmount;
+
+	MTerm *ms = new MTerm[numAmount + numdAmount];
+	for (int i = 0; i < numAmount; i++) {
+		ms[i] = new MTerm(nums[i], 4, false);
+	}
+	for (int i = 0; i < numdAmount; i++) {
+		ms[numAmout + i] = new MTerm(numsd[i], 4, true);
+	}
+
+	PrimeI *pis = new PrimeI[numAmount + numdAmount];
+	for
+
+	return 0;
+}

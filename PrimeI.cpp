@@ -1,5 +1,5 @@
 #include "PrimeI.h"
-#include <iostream>
+#include <cmath>
 using namespace std;
 
 PrimeI::PrimeI() {
@@ -26,7 +26,8 @@ PrimeI::PrimeI(const PrimeI& p1, const PrimeI& p2) {
 	myMTerms = new MTerm[myMTermsCount];
 	for (int i = 0; i < p1.myMTermsCount; i++)
 		myMTerms[i] = p1.myMTerms[i];
-	for (int i = 0, int j = p1.myMTermsCount; i < p2.myMTermsCout; i++, j++)
+	int j = p1.myMTermsCount;
+	for (int i = 0; i < p2.myMTermsCount; i++, j++)
 		myMTerms[j] = p2.myMTerms[j];
 
 	binaryNum = p1.binaryNum & p2.binaryNum;
@@ -40,7 +41,6 @@ PrimeI::PrimeI(const PrimeI& p1, const PrimeI& p2) {
 		mask << 1;
 	}
 
-
 	// hyphens를 XOR 이용해서 구하기
 	hyphens = p1.hyphens;
 	// 우선 합쳐지려면 p1과 p2의 하이픈이 같아야 함.
@@ -48,4 +48,49 @@ PrimeI::PrimeI(const PrimeI& p1, const PrimeI& p2) {
 	// 그리고 p1과 p2를 XOR연산하여 다른 부분을 찾아냄.
 	//   이 부분이 추가로 하이픈이 된다.
 
+	isCombined = false;
 }
+
+bool PrimeI::IsHDOne(const PrimeI& p) const {
+	if (myMTermsCount != p.myMTermsCount) // 가진 Term의 개수가 다르면 합칠 수 없음.
+		return false;
+	if (abs(numOfOnes - p.numOfOnes) != 1) // 1의 수의 차이가 정확히 1이 아니라면 합칠 수 없음.
+		return false;
+	if (hyphens != p.hyphens) // 하이픈 위치가 다르면 합칠 수 없음.
+		return false;
+	
+	//XOR 연산으로 비트가 다른 부분을 찾는다.
+	unsigned int xored = binaryNum ^ p.binaryNum;
+	unsigned int mask = 1;
+	int numOfOneOfXORed = 0;
+	for (int i = 0; i < myMTerms[0].nbits; i++) {
+		if (xored & mask)
+			if (++numOfOneOfXORed > 1) // HD가 1보다 큰 상황
+				return false;
+		mask << 1;
+	}
+	return (numOfOneOfXORed == 1); // HD가 0인지 1인지
+}
+
+ostream& operator<<(ostream& os, const PrimeI& p) {
+	os << "PI->";
+	for (int i = 0; i < p.myMTermsCount; i++)
+		os << p.myMTerms[i] << " ";
+	os << "[";
+	unsigned int mask = 1 << p.myMTerms[i].nbits;
+	for (int i = p.myMTerms[0].nbits - 1; i >= 0; i--) {
+		mask >> 1;
+		if (mask & p.hyphens)
+			os << "-";
+		else
+			os << (mask & p.binaryNum);
+	}
+	os << "]";
+	os << endl;
+	os << "  -> numOfOnes: " << p.numOfOnes << " and isCombined: " << p.isCombined;
+}
+
+
+
+
+

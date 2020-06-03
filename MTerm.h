@@ -12,5 +12,5 @@ public:
 	int OneAmount() const; // 1의 수 반환
 	friend std::ostream& operator<<(std::ostream& os, const MTerm& m);
 		// num=3, nbits=4, isDontCare=true인 경우,
-		// 0011(X)라고 출력한다. 돈케어가 아니면 M이라 출력.
+		// x3:0011라고 출력한다. 돈케어가 아니면 m으로 시작.
 };

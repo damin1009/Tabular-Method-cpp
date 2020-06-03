@@ -17,4 +17,5 @@ public:
 	~PrimeI() { delete[] myMTerms; }
 
 	bool IsHDOne(const PrimeI& p) const;  // 다른 PI와 HD를 비교하여, 1인지 반환
+	friend std::ostream& operator<<(std::ostream& os, const PrimeI& p);
 };
