@@ -38,7 +38,7 @@ PrimeI::PrimeI(const PrimeI& p1, const PrimeI& p2) {
 	for (int i = 0; i < myMTerms[0].nbits; i++) {
 		if (binaryNum & mask)
 			numOfOnes++;
-		mask << 1;
+		mask = mask << 1;
 	}
 
 	// hyphens를 XOR 이용해서 구하기
@@ -67,7 +67,7 @@ bool PrimeI::IsHDOne(const PrimeI& p) const {
 		if (xored & mask)
 			if (++numOfOneOfXORed > 1) // HD가 1보다 큰 상황
 				return false;
-		mask << 1;
+		mask = mask << 1;
 	}
 	return (numOfOneOfXORed == 1); // HD가 0인지 1인지
 }
@@ -79,7 +79,7 @@ ostream& operator<<(ostream& os, const PrimeI& p) {
 	os << "[";
 	unsigned int mask = 1 << p.myMTerms[i].nbits;
 	for (int i = p.myMTerms[0].nbits - 1; i >= 0; i--) {
-		mask >> 1;
+		mask = mask >> 1;
 		if (mask & p.hyphens)
 			os << "-";
 		else
