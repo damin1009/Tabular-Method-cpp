@@ -24,7 +24,7 @@ bool MTerm::IsHDOne(const MTerm& m) const {
 				// d이미 HD가 1을 넘겼는데도 계속 작업하여
 				// 쓸데없는 처리를 하게 되는 경우를 막기 위함.
 				return false;
-		mask << 1;
+		mask = mask << 1;
 	}
 	return (numOfOneOfXORed == 1);
 }
