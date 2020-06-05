@@ -12,8 +12,13 @@ PrimeI::PrimeI() {
 }
 
 PrimeI::PrimeI(const MTerm& mt) {
+	Init(mt);
+}
+
+void PrimeI::Init(const MTerm& mt) {
 	myMTerms = new MTerm[1] { mt };
 	myMTermsCount = 1;
+	binaryNum = mt.num;
 	numOfOnes = mt.OneAmount();
 	hyphens = 0;
 	isCombined = false;
@@ -25,20 +30,21 @@ PrimeI::PrimeI(const PrimeI& p1, const PrimeI& p2) {
 	myMTermsCount = p1.myMTermsCount + p2.myMTermsCount;
 	myMTerms = new MTerm[myMTermsCount];
 	for (int i = 0; i < p1.myMTermsCount; i++)
-		myMTerms[i] = p1.myMTerms[i];
+		myMTerms[i].Init(p1.myMTerms[i]);
 	int j = p1.myMTermsCount;
 	for (int i = 0; i < p2.myMTermsCount; i++, j++)
-		myMTerms[j] = p2.myMTerms[j];
+		myMTerms[j].Init(p2.myMTerms[i]);
 
-	binaryNum = p1.binaryNum & p2.binaryNum;
 	// 01-1과 01-0이 만난다면, 01--가 되어야 함.
-	// binaryNum은 각각 0101과 0100이고, & 하면 0100. 정확함.
+	// binaryNum은 각각 0101과 0100이고, & 하면 0100. 
+	binaryNum = p1.binaryNum & p2.binaryNum;
+
 	numOfOnes = 0;
 	unsigned int mask = 1;
 	for (int i = 0; i < myMTerms[0].nbits; i++) {
 		if (binaryNum & mask)
 			numOfOnes++;
-		mask = mask << 1;
+		mask <<= 1;
 	}
 
 	// hyphens를 XOR 이용해서 구하기
@@ -67,7 +73,7 @@ bool PrimeI::IsHDOne(const PrimeI& p) const {
 		if (xored & mask)
 			if (++numOfOneOfXORed > 1) // HD가 1보다 큰 상황
 				return false;
-		mask = mask << 1;
+		mask <<= 1;
 	}
 	return (numOfOneOfXORed == 1); // HD가 0인지 1인지
 }
@@ -77,13 +83,13 @@ ostream& operator<<(ostream& os, const PrimeI& p) {
 	for (int i = 0; i < p.myMTermsCount; i++)
 		os << p.myMTerms[i] << " ";
 	os << "[";
-	unsigned int mask = 1 << p.myMTerms[i].nbits;
+	unsigned int mask = 1 << p.myMTerms[0].nbits;
 	for (int i = p.myMTerms[0].nbits - 1; i >= 0; i--) {
-		mask = mask >> 1;
+		mask >>= 1;
 		if (mask & p.hyphens)
 			os << "-";
 		else
-			os << (mask & p.binaryNum);
+			os << ((mask & p.binaryNum) != 0);
 	}
 	os << "]";
 	os << endl;

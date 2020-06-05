@@ -9,6 +9,7 @@ public:
 	unsigned int hyphens; // 0-01 이라면, 하이픈 위치에 1. 0100.
 	bool isCombined;
 
+	void Init(const MTerm& mt);
 	PrimeI();
 	PrimeI(const MTerm& mt);
 	PrimeI(const PrimeI& p1, const PrimeI& p2); // 두 PI를 합친 새로운 PI 생성
