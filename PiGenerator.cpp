@@ -53,49 +53,68 @@ void PiGenerator::MakePis() {
 		return;
 	}
 
-	queue<PiListContainer> q;
-	PiListContainer *c1 = cts[0];
+	vector<PiListContainer> q;
+	auto it = cts.begin();
 	int rest = 0;  // 이번 레벨에서, 남은 컨테이너 수
-	for (auto it = ++cts.begin(); it != cts.end(); it++) {
-		q.push(*it);
+	for (; it != cts.end(); it++) {
+		q.push_back(*it);
 		rest++;
 	}
+	rest--;
+	
+	cout << "Init Comp" << endl;
 
 	// 만약 총 컨테이너 수가 4일 때, 큐에는 3개 들어간 상태로 시작. rest도 3.
 	// 2개씩 합쳐서, 이제 3번이랑 4번이 합쳐진 후, rest--로 rest가 0이 됨.
 	// 
-
-	for (; !q.isEmpty(); rest--) {
-		// 이번 레벨(합쳐진 수)에 있는 컨테이너끼리
-		// 가능한 모든 경우의 수로 합치기 시도한 상태.
-		// 즉 이번에 꺼내는 q는 다음 레벨의 것.
+	for (int i = 1; i < q.size(); rest--, i++) {
+		// rest == 0이라면, 이번 레벨(합쳐진 수)에 있는 컨테이너끼리
+		//   가능한 모든 경우의 수로 합치기 시도한 상태.
+		//   즉 이번에 꺼내는 q는 다음 레벨의 것.
 		if (rest == 0) {
-			rest = q.size();
-			c1 = *(q.top());
-			q.pop();
+			cout << ">> rest가 0이 되었음!" << endl;
+			// 이번 컨테이너와 다음 컨테이너를 합칠 수는 없음.
+			//   레벨이 달라서.
+			//   따라서 이번 단계는 건너뛰면서, rest를 설정하고,
+			//   다음 컨테이너와 그다음 컨테이너끼리 합칠 수 있도록 함.
+			rest = q.size() - i;
+
+			if (rest < 2)
+				break;
+
+			rest--;
+			i++;
+		}
+
+		// pi를 하나도 가지지 않은, 빈 컨테이너라면, 합치지 않고 넘어감.
+		// 또한 두 컨테이너의 numOfOnes의 차이가 1이 아니라면, 합치지 않고 넘어감.
+		// 앞에 있는 컨테이너의 numOfOnes가 뒤에 있는 컨테이너보다 무조건 작다.
+		if ( (q[i-1].myPiAmount == 0) || (q[i].myPiAmount == 0)
+			|| (q[i].numOfOnes - q[i-1].numOfOnes != 1) ) {
 			continue;
 		}
 
-		if (q.top().myPisAmount == 0)
-			continue;
-
-		if (q.top().numOfOnes - (*c1).numOfOnes != 1)
-			continue;
-		
-		// queue에는 두 컨테이너를 합친 새로운 컨테이너 추가
-		q.push(PiListContainer(*c1, q.top());
-		rest++;
-
-		// combined되지 않은 모든 pi들을
-		// completePis에 추가.
-		auto itpi = c1.pis.begin();
-		for (; itpi != c1.pis.end(); it++)
-			if (!(*itpi).isCombined)
-				completePis.push_back(*itpi);
-		itpi = q.top().pis.begin();
-		for (; itpi != q.top().pis.end(); it++)
-			if (!(*itpi).isCombined)
-				completePis.push_back(*itpi);
-	
+		cout << ">> Combine Two Container" << endl;
+		cout << q[i-1];
+		cout << q[i] << endl;
+		// queue에 두 컨테이너를 합친 새로운 컨테이너 추가
+		q.push_back(PiListContainer(q[i-1], q[i]));
+		cout << ">> Result New Container" << endl;
+		cout << q.back() << endl;
 	}
+
+	// combined되지 않은 모든 pi들을
+	// completePis에 추가.
+	auto itvec = q.begin();	
+	for (; itvec != q.end(); itvec++) {
+		auto itit = (*itvec).pis.begin();
+		for (; itit != (*itvec).pis.end(); itit++) {
+			if (!(*itit).isCombined)
+				completePis.push_back(*itit);
+		}
+	}
+	
+	cout << ">> PI들이 제대로 생성되었는가??" << endl;
+	for (int i = 0; i < completePis.size(); i++)
+		cout << completePis[i] << endl;
 }

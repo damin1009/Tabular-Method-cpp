@@ -22,10 +22,11 @@ int main(void) {
 	int nbits = 4;
 
 	cout << "Create PiGenerator" << endl;
-	PiGenerator(nbits, allTerms, mtermsAmount, dontcaresAmount);
-
-
-
+	PiGenerator pig(nbits, allTerms, mtermsAmount, dontcaresAmount);
 	cout << "Happy Ending" << endl;
+
+	cout << "Find PIs" << endl;
+	pig.MakePis();
+	cout << "Happy Ending 2" << endl;
 	return 0;
 }

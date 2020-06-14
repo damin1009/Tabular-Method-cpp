@@ -10,6 +10,7 @@ public:
 	int myPiAmount;
 
 	PiListContainer(int nm=0);
+	PiListContainer(const PiListContainer& p);
 	PiListContainer(PiListContainer& pl1, PiListContainer& pl2);
 	void AddPi(const PrimeI& pr);
 

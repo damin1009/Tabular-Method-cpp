@@ -2,6 +2,16 @@
 
 PiListContainer::PiListContainer(int nm): numOfOnes(nm) {}
 
+PiListContainer::PiListContainer(const PiListContainer& p) {
+	numOfOnes = p.numOfOnes;
+	pis.clear();
+	auto it = p.pis.begin();
+	for (; it != p.pis.end(); it++) {
+		pis.push_back(PrimeI(*it));
+	}
+	myPiAmount = p.myPiAmount;
+}
+
 PiListContainer::PiListContainer 
 	(PiListContainer& pl1, PiListContainer& pl2) 
 {
@@ -41,7 +51,7 @@ void PiListContainer::AddPi(const PrimeI& pr) {
 }
 
 ostream& operator<<(ostream& os, const PiListContainer& pl) {
-	os << "PiListContainer ==== numOfOnes: " << pl.numOfOnes << endl;
+	os << "PiListContainer = numOfOnes: " << pl.numOfOnes << endl;
 	auto it = pl.pis.begin();
 	for (; it != pl.pis.end(); it++)
 		os << *it << endl;
