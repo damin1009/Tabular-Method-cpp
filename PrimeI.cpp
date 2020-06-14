@@ -15,6 +15,17 @@ PrimeI::PrimeI(const MTerm& mt) {
 	Init(mt);
 }
 
+PrimeI::PrimeI(const PrimeI& p) {
+	myMTermsCount = p.myMTermsCount;
+	myMTerms = new MTerm[myMTermsCount];
+	for (int i = 0; i < myMTermsCount; i++) 
+		myMTerms[i] = p.myMTerms[i];
+	binaryNum = p.binaryNum;
+	numOfOnes = p.numOfOnes;
+	hyphens = p.hyphens;
+	isCombined = p.isCombined;
+}
+
 void PrimeI::Init(const MTerm& mt) {
 	myMTerms = new MTerm[1] { mt };
 	myMTermsCount = 1;

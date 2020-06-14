@@ -1,18 +1,18 @@
 #include <iostream>
-#include <vector>
+#include <list>
 #include "PrimeI.h"
 using namespace std;
 
 class PiListContainer {
 public:
 	int numOfOnes;
-	vector<PrimeI> pis;
+	std::list<PrimeI> pis;
 	int myPiAmount;
 
-	PiListContainer();
-	PiListContainer(const PiListContainer& pl1, const PiListContainer& pl2);
+	PiListContainer(int nm=0);
+	PiListContainer(PiListContainer& pl1, PiListContainer& pl2);
 	void AddPi(const PrimeI& pr);
 
-	friend ostream& operator<<(ostream& os, const PiListConrainer& pl);
+	friend ostream& operator<<(ostream& os, const PiListContainer& pl);
 };
 

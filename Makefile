@@ -16,5 +16,11 @@ MTerm_test: MTerm.h MTerm.cpp MTerm_test.cpp
 PrimeI_test: MTerm.h MTerm.cpp PrimeI.h PrimeI.cpp PrimeI_test.cpp
 	$(CC) $(FLAGS) $@ $^ $(LIBS)
 
+PiListContainer_test: MTerm.h MTerm.cpp PrimeI.h PrimeI.cpp PiListContainer.h PiListContainer.cpp PiListContainer_test.cpp
+	$(CC) $(FLAGS) $@ $^ $(LIBS)
+
+PiGenerator_test: MTerm.h MTerm.cpp PrimeI.h PrimeI.cpp PiListContainer.h PiListContainer.cpp PiGenerator.h PiGenerator.cpp PiGenerator_test.cpp
+	$(CC) $(FLAGS) $@ $^ $(LIBS)
+
 clean:
 	rm -f *.o

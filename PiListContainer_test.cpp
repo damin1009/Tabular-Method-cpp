@@ -6,7 +6,7 @@
 int main(void) {
 	// PrimeI_test.cpp에서 내용 따옴
 	int numAmount = 6;
-	unsigned int *nums = new unsigned int[numAmount] { 0, 4, 8, 10, 11, 12 };
+	unsigned int *nums = new unsigned int[numAmount] { 0, 4, 8, 10, 12, 11 };
 	int numdAmount = 2;
 	unsigned int *numsd = new unsigned int[numdAmount] { 13, 15 };
 
@@ -27,10 +27,11 @@ int main(void) {
 		cout << pis[i] << endl;
 	}
 
-	PiListContainer pl0();
-	PiListContainer pl1();
-	PiListContainer pl2();
-	PiListContainer pl3();
+	PiListContainer pl0;
+	PiListContainer pl1;
+	PiListContainer pl2;
+	PiListContainer pl3;
+	PiListContainer pl4;
 	pl0.AddPi(pis[0]);
 	pl1.AddPi(pis[1]);
 	pl1.AddPi(pis[2]);
@@ -48,6 +49,9 @@ int main(void) {
 	cout << "pl1_cmb1" << pl1_cmb1 << endl;
 	cout << "pl2_cmb1" << pl2_cmb1 << endl;
 	cout << "pl3_cmb1" << pl3_cmb1 << endl;
+
+	PiListContainer pl0_cmb2(pl0_cmb1, pl1_cmb1);
+	cout << "pl0_cmb2" << pl0_cmb2;
 
 	return 0;
 }

@@ -12,11 +12,13 @@ public:
 	void Init(const MTerm& mt);
 	PrimeI();
 	PrimeI(const MTerm& mt);
+	PrimeI(const PrimeI& p);
 	PrimeI(const PrimeI& p1, const PrimeI& p2); // 두 PI를 합친 새로운 PI 생성
 		// 물론 합쳐질 수 있는 순간 그것들은 PI가 아닌 것이긴 한데
 		// 굳이 '아직 PI인지 아닌지 모르는 묶음"이라고 할 필요는 없으니...
 	~PrimeI() { delete[] myMTerms; }
 
+	void SetIsCombined() { isCombined = true; }
 	bool IsHDOne(const PrimeI& p) const;  // 다른 PI와 HD를 비교하여, 1인지 반환
 	friend std::ostream& operator<<(std::ostream& os, const PrimeI& p);
 };
